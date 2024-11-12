@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { Mail, Phone, MapPin } from 'lucide-react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -12,37 +14,44 @@ const Contact = () => {
     subject: '',
     message: '',
   });
-  const [submitted, setSubmitted] = useState(false); // Track submission status
   const [loading, setLoading] = useState(false); // Track loading state
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true); // Set loading to true
     const form = e.target as HTMLFormElement;
     const formDataObj = new FormData(form);
 
-    fetch('https://formspree.io/f/xvgorqry', {
-      method: 'POST',
-      body: formDataObj,
-    })
-      .then((response) => {
-        if (response.ok) {
-          setSubmitted(true); // Set form as submitted
-          setFormData({
-            firstName: '',
-            lastName: '',
-            phoneNumber: '',
-            countryCode: '+254',
-            email: '',
-            subject: '',
-            message: '',
-          }); // Reset form fields
-        } else {
-          console.error('Form submission error');
-        }
-      })
-      .catch((error) => console.error('Form submission error:', error))
-      .finally(() => setLoading(false)); // Reset loading state
+    // Show the success toast immediately when the user submits the form
+    toast.success('Your message was sent successfully!', {
+      autoClose: 5000,
+    });
+
+    try {
+      await fetch('https://formspree.io/f/xvgorqry', {
+        method: 'POST',
+        body: formDataObj,
+      });
+      // Clear the form after submission
+      setFormData({
+        firstName: '',
+        lastName: '',
+        phoneNumber: '',
+        countryCode: '+254',
+        email: '',
+        subject: '',
+        message: '',
+      });
+    } catch (error) {
+      console.error('Form submission error:', error);
+    } finally {
+      setLoading(false); // Reset loading state
+
+      // Wait for 4 seconds before reloading the page
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -110,149 +119,142 @@ const Contact = () => {
           className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-8"
         >
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h2>
-          {submitted ? (
-            <div className="text-center text-green-600">
-              <h3 className="text-xl font-semibold mb-4">Thank you for reaching out!</h3>
-              <p>
-                We have received your message and our team will get back to you shortly.
-                In the meantime, feel free to explore our website for more information about our programs and services.
-              </p>
-            </div>
-          ) : (
-            <form
-              onSubmit={handleSubmit}
-              action="https://formspree.io/f/xvgorqry"
-              method="POST"
-              className="space-y-6"
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
-                    First Name
-                  </label>
-                  <input
-                    type="text"
-                    id="firstName"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                    required
-                  />
-                </div>
-                <div>
-                  <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
-                    Last Name
-                  </label>
-                  <input
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                    required
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="countryCode" className="block text-sm font-medium text-gray-700 mb-2">
-                    Country Code
-                  </label>
-                  <select
-                    id="countryCode"
-                    name="countryCode"
-                    value={formData.countryCode}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                    required
-                  >
-                    <option value="+254">+254 Kenya</option>
-                    <option value="+1">+1 USA</option>
-                    <option value="+44">+44 UK</option>
-                    <option value="+91">+91 India</option>
-                    <option value="+61">+61 Australia</option>
-                    <option value="+55">+55 Brazil</option>
-                    <option value="+86">+86 China</option>
-                    <option value="+33">+33 France</option>
-                    <option value="+49">+49 Germany</option>
-                    <option value="+1">+1 Canada</option>
-                    <option value="+81">+81 Japan</option>
-                    <option value="+54">+54 Argentina</option>
-                    <option value="+60">+60 Malaysia</option>
-                    <option value="+7">+7 Korea</option>
-                    <option value="+90">+90 Turkey</option>
-                    <option value="+82">+82 South Korea</option>
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-2">
-                    Phone Number
-                  </label>
-                  <input
-                    type="text"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    value={formData.phoneNumber}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                    required
-                  />
-                </div>
-              </div>
+          <form
+            onSubmit={handleSubmit}
+            action="https://formspree.io/f/xvgorqry"
+            method="POST"
+            className="space-y-6"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                  Subject
+                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
+                  First Name
                 </label>
                 <input
                   type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
+                  id="firstName"
+                  name="firstName"
+                  value={formData.firstName}
                   onChange={handleChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   required
                 />
               </div>
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  Message
+                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
+                  Last Name
                 </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
+                <input
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  value={formData.lastName}
                   onChange={handleChange}
-                  rows={6}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   required
                 />
               </div>
-              <div className="text-center">
-                <button
-                  type="submit"
-                  className="mt-4 px-8 py-3 text-white bg-indigo-600 rounded-full hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  disabled={loading}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label htmlFor="countryCode" className="block text-sm font-medium text-gray-700 mb-2">
+                  Country Code
+                </label>
+                <select
+                  id="countryCode"
+                  name="countryCode"
+                  value={formData.countryCode}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  required
                 >
-                  {loading ? 'Sending...' : 'Send Message'} <Send className="inline-block ml-2 h-5 w-5" />
-                </button>
+                  <option value="+254">+254 Kenya</option>
+                  <option value="+1">+1 USA</option>
+                  <option value="+44">+44 UK</option>
+                  <option value="+91">+91 India</option>
+                  <option value="+61">+61 Australia</option>
+                  <option value="+55">+55 Brazil</option>
+                  <option value="+86">+86 China</option>
+                  <option value="+33">+33 France</option>
+                  <option value="+49">+49 Germany</option>
+                  <option value="+1">+1 Canada</option>
+                  <option value="+81">+81 Japan</option>
+                  <option value="+54">+54 Argentina</option>
+                  <option value="+60">+60 Malaysia</option>
+                  <option value="+7">+7 Korea</option>
+                  <option value="+90">+90 Turkey</option>
+                  <option value="+82">+82 South Korea</option>
+                </select>
               </div>
-            </form>
-          )}
+              <div>
+                <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-2">
+                  Phone Number
+                </label>
+                <input
+                  type="text"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  required
+                />
+              </div>
+            </div>
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+                Subject
+              </label>
+              <input
+                type="text"
+                id="subject"
+                name="subject"
+                value={formData.subject}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                Message
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                rows={4}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                required
+              />
+            </div>
+            <div>
+              <button
+                type="submit"
+                className={`w-full px-4 py-2 font-semibold text-white rounded-lg ${
+                  loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700'
+                }`}
+                disabled={loading}
+              >
+                {loading ? 'Sending...' : 'Send Message'}
+              </button>
+            </div>
+          </form>
+          <ToastContainer />
         </motion.div>
       </section>
     </div>
