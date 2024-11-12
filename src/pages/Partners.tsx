@@ -68,21 +68,24 @@ const Partners = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {partners.map((partner, index) => (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white rounded-xl shadow-lg overflow-hidden">           
-              <img
-                  src={partner.logo}
-                  alt={partner.name}
-                  className="w-full h-48 object-cover"/>
-                
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2">{partner.name}</h3>
-                <p className="text-gray-600">{partner.description}</p>
-        </div>
-            </motion.div>
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className="bg-white rounded-xl shadow-lg overflow-hidden"
+          >
+            <img
+              src={partner.logo}
+              alt={partner.name}
+              className="w-full h-48 object-cover"
+            />
+            
+            <div className="p-6">
+              <h3 className="text-xl font-semibold mb-2">{partner.name}</h3>
+              <p className="text-gray-600">{partner.description}</p>
+            </div>
+          </motion.div>
+          
           ))}
         </div>
       </section>
