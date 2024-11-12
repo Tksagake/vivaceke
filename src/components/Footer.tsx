@@ -8,8 +8,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <Music2 className="h-8 w-8 text-indigo-400" />
-              <span className="font-bold text-xl">Vivace</span>
+              <img className="h-8 w-8" src="https://res.cloudinary.com/dylmsnibf/image/upload/v1731415881/VivaceKenya_Logo_byr6fr.png" alt="Vivace Music School" />
+              <span className="font-bold text-xl">Vivace Music school Kenya</span>
             </div>
             <p className="text-gray-400">
               Inspiring musical excellence through education and innovation.
@@ -29,10 +29,10 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold text-lg mb-4">Contact Info</h3>
             <ul className="space-y-2 text-gray-400">
-              <li>123 Music Avenue</li>
-              <li>New York, NY 10001</li>
-              <li>Phone: (555) 123-4567</li>
-              <li>Email: info@vivace.com</li>
+              <li>Nairobi, Kenya</li>
+              <li>P.O BOX 52000-00200</li>
+              <li>Phone: +2547-9406-8508</li>
+              <li>Email: vivacemusicke@gmail.com</li>
             </ul>
           </div>
 
@@ -54,6 +54,7 @@ const Footer = () => {
 
         <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
           <p>&copy; {new Date().getFullYear()} Vivace Music School. All rights reserved.</p>
+          <p>Powered by DiversiWorks Times Group</p>
         </div>
       </div>
     </footer>

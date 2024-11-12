@@ -5,22 +5,28 @@ import { Award, Heart, Target } from 'lucide-react';
 const About = () => {
   const team = [
     {
-      name: 'Sarah Johnson',
+      name: 'Malcolm Sikolia',
       role: 'Founder & Director',
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
-      bio: 'Concert pianist with over 20 years of teaching experience.',
+      image: 'https://res.cloudinary.com/dylmsnibf/image/upload/v1731417420/Sikoliar_umyyzx.jpg',
+      bio: 'Founder and lead director of the online learning platform. A choir trainer, vocal coach and music theory educator, digital audio workstations and notation software applications',
     },
     {
-      name: 'Michael Chen',
-      role: 'Lead Instructor',
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
-      bio: 'Classical violinist and composer with international performance experience.',
+      name: 'Mr. Elvis A. Salano',
+      role: 'Dean of Studies',
+      image: 'https://res.cloudinary.com/dylmsnibf/image/upload/v1731416713/sirlano_autbt8_c_pad_b_gen_fill_ar_16_9_o0kbl1.jpg',
+      bio: 'Professional music educator for music theory and instrumental training. Current head of Music Department in Nova Pioneer School',
     },
     {
-      name: 'Emma Rodriguez',
-      role: 'Vocal Coach',
-      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
-      bio: 'Professional opera singer and vocal technique specialist.',
+      name: 'Ms. Pamela O. Norah.',
+      role: 'Quality and Assurance Manager',
+      image: 'https://res.cloudinary.com/dylmsnibf/image/upload/v1731415848/pamnorah_rcybo5.jpg',
+      bio: 'Professional music educator for music theory and instrumental training. Current head of Music Department in Rangala Girs School',
+    },
+    {
+      name: 'Mr. Tom B. Brown',
+      role: 'Instrumentals Head',
+      image: 'https://res.cloudinary.com/dylmsnibf/image/upload/v1731415848/sir_tom_u5kncj.webp',
+      bio: 'Professional Music educator and instrumentals coach. Excellent vocal coach and instrumental training for brass, woodwind ans strings.',
     },
   ];
 

@@ -23,7 +23,7 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
               <Music2 className="h-8 w-8 text-indigo-600" />
-              <span className="font-bold text-xl text-gray-900">Vivace</span>
+              <span className="font-bold text-xl text-gray-900">Vivace Music School</span>
             </Link>
           </div>
 
