@@ -16,9 +16,21 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission (without a backend)
-    console.log('Form submitted:', formData);
-    setSubmitted(true); // Set form as submitted
+    // Submit to Formspree
+    const form = e.target as HTMLFormElement;
+    const formDataObj = new FormData(form);
+    fetch('https://formspree.io/f/xvgorqry', {
+      method: 'POST',
+      body: formDataObj,
+    })
+      .then((response) => {
+        if (response.ok) {
+          setSubmitted(true); // Set form as submitted
+        } else {
+          console.error('Form submission error');
+        }
+      })
+      .catch((error) => console.error('Form submission error:', error));
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -45,26 +57,24 @@ const Contact = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          {[
-            {
-              icon: <Phone className="h-8 w-8" />,
-              title: 'Phone',
-              info: '+254-794-068-508, +254-795-958-448',
-              subInfo: 'Mon-Fri 9am-6pm',
-            },
-            {
-              icon: <Mail className="h-8 w-8" />,
-              title: 'Email',
-              info: 'vivacemusicke@gmail.com',
-              subInfo: 'We reply within 24 hours',
-            },
-            {
-              icon: <MapPin className="h-8 w-8" />,
-              title: 'Location',
-              info: 'Juja Square',
-              subInfo: 'Juja, Kenya',
-            },
-          ].map((item, index) => (
+          {[{
+            icon: <Phone className="h-8 w-8" />,
+            title: 'Phone',
+            info: '+254-794-068-508, +254-795-958-448',
+            subInfo: 'Mon-Fri 9am-6pm',
+          },
+          {
+            icon: <Mail className="h-8 w-8" />,
+            title: 'Email',
+            info: 'vivacemusicke@gmail.com',
+            subInfo: 'We reply within 24 hours',
+          },
+          {
+            icon: <MapPin className="h-8 w-8" />,
+            title: 'Location',
+            info: 'Juja Square',
+            subInfo: 'Juja, Kenya',
+          }].map((item, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
@@ -97,7 +107,12 @@ const Contact = () => {
               </p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form
+              onSubmit={handleSubmit}
+              action="https://formspree.io/f/xvgorqry"
+              method="POST"
+              className="space-y-6"
+            >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
@@ -156,31 +171,6 @@ const Contact = () => {
                     <option value="+7">+7 Korea</option>
                     <option value="+90">+90 Turkey</option>
                     <option value="+82">+82 South Korea</option>
-                    <option value="+504">+504 Nicaragua</option>
-                    <option value="+56">+56 Chile</option>
-                    <option value="+57">+57 Colombia</option>
-                    <option value="+58">+58 Venezuela</option>
-                    <option value="+593">+593 Ecuador</option>
-                    <option value="+595">+595 Paraguay</option>
-                    <option value="+598">+598 Uruguay</option>
-                    <option value="+51">+51 Peru</option>
-                    <option value="+52">+52 Mexico</option>
-                    <option value="+63">+63 Philippines</option>
-                    <option value="+64">+64 New Zealand</option>
-                    <option value="+852">+852 Hong Kong</option>
-                    <option value="+853">+853 China (Hong Kong)</option>
-                    <option value="+855">+855 Cambodia</option>
-                    <option value="+856">+856 Taiwan</option>
-                    <option value="+857">+857 Singapore</option>
-                    <option value="+858">+858 Macau</option>
-                    <option value="+859">+859 Hong Kong SAR</option>
-                    <option value="+860">+860 Macau SAR</option>
-                    <option value="+861">+861 China (Macau)</option>
-                    <option value="+862">+862 China (Taiwan)</option>
-                    <option value="+863">+863 China (Hong Kong)</option>
-                    <option value="+864">+864 China (Singapore)</option>
-                    <option value="+865">+865 China (Taiwan)</option>
-
                   </select>
                 </div>
                 <div>
@@ -238,15 +228,16 @@ const Contact = () => {
                   rows={6}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   required
-                ></textarea>
+                />
               </div>
-              <button
-                type="submit"
-                className="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors duration-300 flex items-center justify-center space-x-2"
-              >
-                <Send className="h-5 w-5" />
-                <span>Send Message</span>
-              </button>
+              <div className="text-center">
+                <button
+                  type="submit"
+                  className="mt-4 px-8 py-3 text-white bg-indigo-600 rounded-full hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                >
+                  Send Message <Send className="inline-block ml-2 h-5 w-5" />
+                </button>
+              </div>
             </form>
           )}
         </motion.div>
