@@ -13,12 +13,14 @@ const Contact = () => {
     message: '',
   });
   const [submitted, setSubmitted] = useState(false); // Track submission status
+  const [loading, setLoading] = useState(false); // Track loading state
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Submit to Formspree
+    setLoading(true); // Set loading to true
     const form = e.target as HTMLFormElement;
     const formDataObj = new FormData(form);
+
     fetch('https://formspree.io/f/xvgorqry', {
       method: 'POST',
       body: formDataObj,
@@ -26,11 +28,21 @@ const Contact = () => {
       .then((response) => {
         if (response.ok) {
           setSubmitted(true); // Set form as submitted
+          setFormData({
+            firstName: '',
+            lastName: '',
+            phoneNumber: '',
+            countryCode: '+254',
+            email: '',
+            subject: '',
+            message: '',
+          }); // Reset form fields
         } else {
           console.error('Form submission error');
         }
       })
-      .catch((error) => console.error('Form submission error:', error));
+      .catch((error) => console.error('Form submission error:', error))
+      .finally(() => setLoading(false)); // Reset loading state
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -234,8 +246,9 @@ const Contact = () => {
                 <button
                   type="submit"
                   className="mt-4 px-8 py-3 text-white bg-indigo-600 rounded-full hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  disabled={loading}
                 >
-                  Send Message <Send className="inline-block ml-2 h-5 w-5" />
+                  {loading ? 'Sending...' : 'Send Message'} <Send className="inline-block ml-2 h-5 w-5" />
                 </button>
               </div>
             </form>
