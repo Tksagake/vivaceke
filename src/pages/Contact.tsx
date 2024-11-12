@@ -4,7 +4,10 @@ import { Mail, Phone, MapPin, Send } from 'lucide-react';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    countryCode: '+254', // default country code (Kenya)
     email: '',
     subject: '',
     message: '',
@@ -88,44 +91,126 @@ const Contact = () => {
           {submitted ? (
             <div className="text-center text-green-600">
               <h3 className="text-xl font-semibold mb-4">Thank you for reaching out!</h3>
-                <p>
-          We have received your message and our team will get back to you shortly
-
-           In the meantime, feel free to explore our website for more information about our programs and services.
-
-          </p>
+              <p>
+                We have received your message and our team will get back to you shortly.
+                In the meantime, feel free to explore our website for more information about our programs and services.
+              </p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                    Name
+                  <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
+                    First Name
                   </label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
+                    id="firstName"
+                    name="firstName"
+                    value={formData.firstName}
                     onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     required
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    Email
+                  <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
+                    Last Name
                   </label>
                   <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    value={formData.lastName}
                     onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     required
                   />
                 </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="countryCode" className="block text-sm font-medium text-gray-700 mb-2">
+                    Country Code
+                  </label>
+                  <select
+                    id="countryCode"
+                    name="countryCode"
+                    value={formData.countryCode}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    required
+                  >
+                    <option value="+254">+254 Kenya</option>
+                    <option value="+1">+1 USA</option>
+                    <option value="+44">+44 UK</option>
+                    <option value="+91">+91 India</option>
+                    <option value="+61">+61 Australia</option>
+                    <option value="+55">+55 Brazil</option>
+                    <option value="+86">+86 China</option>
+                    <option value="+33">+33 France</option>
+                    <option value="+49">+49 Germany</option>
+                    <option value="+1">+1 Canada</option>
+                    <option value="+81">+81 Japan</option>
+                    <option value="+54">+54 Argentina</option>
+                    <option value="+60">+60 Malaysia</option>
+                    <option value="+7">+7 Korea</option>
+                    <option value="+90">+90 Turkey</option>
+                    <option value="+82">+82 South Korea</option>
+                    <option value="+504">+504 Nicaragua</option>
+                    <option value="+56">+56 Chile</option>
+                    <option value="+57">+57 Colombia</option>
+                    <option value="+58">+58 Venezuela</option>
+                    <option value="+593">+593 Ecuador</option>
+                    <option value="+595">+595 Paraguay</option>
+                    <option value="+598">+598 Uruguay</option>
+                    <option value="+51">+51 Peru</option>
+                    <option value="+52">+52 Mexico</option>
+                    <option value="+63">+63 Philippines</option>
+                    <option value="+64">+64 New Zealand</option>
+                    <option value="+852">+852 Hong Kong</option>
+                    <option value="+853">+853 China (Hong Kong)</option>
+                    <option value="+855">+855 Cambodia</option>
+                    <option value="+856">+856 Taiwan</option>
+                    <option value="+857">+857 Singapore</option>
+                    <option value="+858">+858 Macau</option>
+                    <option value="+859">+859 Hong Kong SAR</option>
+                    <option value="+860">+860 Macau SAR</option>
+                    <option value="+861">+861 China (Macau)</option>
+                    <option value="+862">+862 China (Taiwan)</option>
+                    <option value="+863">+863 China (Hong Kong)</option>
+                    <option value="+864">+864 China (Singapore)</option>
+                    <option value="+865">+865 China (Taiwan)</option>
+
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-2">
+                    Phone Number
+                  </label>
+                  <input
+                    type="text"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    value={formData.phoneNumber}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    required
+                  />
+                </div>
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  required
+                />
               </div>
               <div>
                 <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
